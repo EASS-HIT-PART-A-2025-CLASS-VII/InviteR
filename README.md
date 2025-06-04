@@ -194,3 +194,4 @@ Pull requests are welcome! Please open an issue first to discuss major changes.
 
 ## License
 All rights reserved © 2025 InviteR
+ 

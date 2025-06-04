@@ -544,7 +544,8 @@ router.post('/waves/send', async (req, res) => {
     let eventDateStr = '';
     if (event.date) {
       const d = new Date(event.date);
-      eventDateStr = d.toLocaleDateString('he-IL');
+      const pad = n => n.toString().padStart(2, '0');
+      eventDateStr = `${pad(d.getDate())}|${pad(d.getMonth() + 1)}|${d.getFullYear()}`;
     }
 
     // Prepare log data

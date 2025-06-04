@@ -48,7 +48,8 @@ cron.schedule('* * * * *', async () => {
               };
               // Get all guests for this wave
               const allGuestsInWave = event.guests.filter(guest => guest.wave === wave.id);
-              const guests = allGuestsInWave.filter(guest => guest.status !== 'מגיע' && guest.status !== 'לא מגיע');
+              const sendToStatuses = wave.sendToStatuses || ['טרם ענה'];
+              const guests = allGuestsInWave.filter(guest => sendToStatuses.includes(guest.status));
               // Log skipped guests
               const skippedGuests = allGuestsInWave.filter(guest => guest.status === 'מגיע' || guest.status === 'לא מגיע');
               logData.skippedGuests = skippedGuests.map(g => `- ${g.name} (${g.phone}): ${g.status}`);

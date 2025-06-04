@@ -22,7 +22,8 @@ const waveSchema = new mongoose.Schema({
   type: { type: String, enum: ['sms', 'whatsapp', 'phone'], required: true },
   message: { type: String, required: true },
   sendCount: { type: Number, default: 0 },
-  active: { type: Boolean, default: true }
+  active: { type: Boolean, default: true },
+  sendToStatuses: { type: [String], default: ['טרם ענה'] }
 });
 
 const eventSchema = new mongoose.Schema({
