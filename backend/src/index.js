@@ -5,7 +5,6 @@ import mongoose from 'mongoose';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/user.js';
 import guestRoutes from './routes/guest.js';
-import '../sendWhatsAppWave.js';
 import './waveScheduler.js';
 
 // Load environment variables

@@ -1,8 +1,8 @@
 import cron from 'node-cron';
 import User from './models/User.js';
-import { sendWaveMessages } from '../sendWhatsAppWave.js';
 import fs from 'fs';
 import path from 'path';
+import axios from 'axios';
 
 // Logs directory and log writing function (same as in guest.js)
 const logsDir = path.join(process.cwd(), 'logs');
@@ -54,23 +54,25 @@ cron.schedule('* * * * *', async () => {
               logData.skippedGuests = skippedGuests.map(g => `- ${g.name} (${g.phone}): ${g.status}`);
               // Send messages
               if (wave.type === 'whatsapp') {
-                for (const g of guests) {
-                  let phone = g.phone.replace(/\D/g, '');
-                  if (phone.startsWith('0')) phone = '972' + phone.slice(1);
-                  let personalizedMessage = wave.message
-                    .replace(/\{Name\}/g, g.name)
-                    .replace(/\{GroomName\}/g, event.groomName || '')
-                    .replace(/\{BrideName\}/g, event.brideName || '')
-                    .replace(/\{EventLocation\}/g, event.location || '')
-                    .replace(/\{WazeLink\}/g, event.wazeLink || '')
-                    .replace(/\{PayboxLink\}/g, event.payboxLink || '')
-                    .replace(/\{BitLink\}/g, event.bitLink || '');
-                  try {
-                    await sendWaveMessages([phone], personalizedMessage);
-                    logData.results += `✓ Sent to ${g.name} (${g.phone})\n`;
-                  } catch (err) {
-                    logData.failedAttempts.push(`✗ Failed to send to ${g.name} (${g.phone}): ${err.message}`);
-                  }
+                const guestsToSend = guests.map(g => ({
+                  phone: g.phone.startsWith('0') ? '972' + g.phone.slice(1) : g.phone,
+                  name: g.name,
+                  table: g.table || ''
+                }));
+                try {
+                  const response = await axios.post('http://localhost:5010/send-wave', {
+                    guests: guestsToSend,
+                    message: wave.message
+                  });
+                  response.data.results.forEach((result, idx) => {
+                    if (result.success) {
+                      logData.results += `✓ Sent to ${guestsToSend[idx].name} (${guestsToSend[idx].phone})\n`;
+                    } else {
+                      logData.failedAttempts.push(`✗ Failed to send to ${guestsToSend[idx].name} (${guestsToSend[idx].phone}): ${result.error}`);
+                    }
+                  });
+                } catch (err) {
+                  logData.failedAttempts.push('WhatsApp-service error: ' + err.message);
                 }
               } else {
                 guests.forEach(guest => {

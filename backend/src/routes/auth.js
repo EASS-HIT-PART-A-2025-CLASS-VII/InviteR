@@ -1,6 +1,6 @@
 import express from 'express';
 import User from '../models/User.js';
-import { sendWaveMessages } from '../../sendWhatsAppWave.js';
+import axios from 'axios';
 
 const router = express.Router();
 
@@ -49,15 +49,13 @@ router.post('/send-otp', async (req, res) => {
     otpStore.set(cleanNumber, { otp, expiresAt });
     console.log('Stored OTP for:', cleanNumber);
 
-    // Send OTP via WhatsApp
+    // Send OTP via WhatsApp-service
     let phone = cleanNumber.replace(/\D/g, '');
     if (phone.startsWith('0')) phone = '972' + phone.slice(1);
-    const message = `קוד הכניסה שלך ל-InviteR הוא: ${otp}`;
     try {
-      await sendWaveMessages([phone], message);
-      console.log('OTP sent via WhatsApp to', phone);
+      await axios.post('http://localhost:5010/send-otp', { phone, otp });
     } catch (err) {
-      console.error('Failed to send OTP via WhatsApp:', err);
+      console.error('Failed to send OTP via WhatsApp-service:', err);
       return res.status(500).json({ message: 'Failed to send OTP via WhatsApp' });
     }
 

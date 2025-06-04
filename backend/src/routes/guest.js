@@ -2,10 +2,10 @@ import express from 'express';
 import User from '../models/User.js';
 import multer from 'multer';
 import xlsx from 'xlsx';
-import { sendWaveMessages } from '../../sendWhatsAppWave.js';
 import fs from 'fs';
 import path from 'path';
 import mongoose from 'mongoose';
+import axios from 'axios';
 
 const router = express.Router();
 
@@ -245,17 +245,17 @@ router.put('/quantity', async (req, res) => {
     if (typeof confirmedQuantity !== 'undefined') {
       guest.confirmedQuantity = confirmedQuantity;
       // If guest is marked as 'מגיע', send WhatsApp to user
-      if (guest.status === 'מגיע') {
-        // Check if user wants to receive status updates
-        if (user.receiveStatusUpdates !== false) {
-          let phone = user.phoneNumber.replace(/\D/g, '');
-          if (phone.startsWith('0')) phone = '972' + phone.slice(1);
-          const message = `${guest.name} מגיע - ${confirmedQuantity}`;
-          try {
-            await sendWaveMessages([phone], message);
-          } catch (err) {
-            console.error('Failed to send WhatsApp confirmation to user:', err);
-          }
+      if (guest.status === 'מגיע' && user.receiveStatusUpdates === true) {
+        let phone = user.phoneNumber.replace(/\D/g, '');
+        if (phone.startsWith('0')) phone = '972' + phone.slice(1);
+        const message = `${guest.name} מגיע - ${confirmedQuantity}`;
+        try {
+          await axios.post('http://localhost:5010/send-message', {
+            recipients: [phone],
+            message
+          });
+        } catch (err) {
+          console.error('Failed to send WhatsApp confirmation to user:', err);
         }
       }
     }
@@ -583,28 +583,36 @@ router.post('/waves/send', async (req, res) => {
 
     // Send WhatsApp messages if type is whatsapp
     if (wave.type === 'whatsapp') {
-      for (const g of guests) {
-        // Convert phone to international format (assume Israeli numbers for example)
-        let phone = g.phone.replace(/\D/g, '');
-        if (phone.startsWith('0')) phone = '972' + phone.slice(1);
-        // Personalize message
-        let personalizedMessage = wave.message
-          .replace(/\{Name\}/g, g.name)
-          .replace(/\{GroomName\}/g, event.groomName || '')
-          .replace(/\{BrideName\}/g, event.brideName || '')
-          .replace(/\{EventLocation\}/g, event.location || '')
-          .replace(/\{EventDate\}/g, eventDateStr)
-          .replace(/\{WazeLink\}/g, event.wazeLink || '')
-          .replace(/\{PayboxLink\}/g, event.payboxLink || '')
-          .replace(/\{BitLink\}/g, event.bitLink || '')
-          .replace(/\{Table\}/g, g.table || '');
-        try {
-          await sendWaveMessages([phone], personalizedMessage);
-          logData.results += `✓ Sent to ${g.name} (${g.phone})\n`;
-        } catch (err) {
-          console.error('Error sending WhatsApp message to', phone, err);
-          logData.failedAttempts.push(`✗ Failed to send to ${g.name} (${g.phone}): ${err.message}`);
-        }
+      const guestsToSend = guests.map(g => ({
+        phone: g.phone.startsWith('0') ? '972' + g.phone.slice(1) : g.phone,
+        name: g.name,
+        table: g.table || ''
+      }));
+      try {
+        const response = await axios.post('http://localhost:5010/send-wave', {
+          guests: guestsToSend,
+          message: wave.message,
+          event: {
+            date: event.date,
+            location: event.location,
+            groomName: event.groomName,
+            brideName: event.brideName,
+            groomPhone: event.groomPhone,
+            bridePhone: event.bridePhone,
+            wazeLink: event.wazeLink,
+            payboxLink: event.payboxLink,
+            bitLink: event.bitLink
+          }
+        });
+        response.data.results.forEach((result, idx) => {
+          if (result.success) {
+            logData.results += `✓ Sent to ${guestsToSend[idx].name} (${guestsToSend[idx].phone})\n`;
+          } else {
+            logData.failedAttempts.push(`✗ Failed to send to ${guestsToSend[idx].name} (${guestsToSend[idx].phone}): ${result.error}`);
+          }
+        });
+      } catch (err) {
+        logData.failedAttempts.push('WhatsApp-service error: ' + err.message);
       }
     } else {
       // For development, log the messages instead of sending them
