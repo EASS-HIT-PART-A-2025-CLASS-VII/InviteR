@@ -3,16 +3,28 @@ import cors from 'cors';
 import pkg from 'whatsapp-web.js';
 const { Client, LocalAuth } = pkg;
 import qrcode from 'qrcode-terminal';
+import fs from 'fs';
+import path from 'path';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Clean up Chromium profile directory
+const profileDir = '/tmp/whatsapp-session';
+if (fs.existsSync(profileDir)) {
+    fs.rmSync(profileDir, { recursive: true, force: true });
+}
+fs.mkdirSync(profileDir, { recursive: true });
+
 const client = new Client({
     authStrategy: new LocalAuth({
-        dataPath: './session'
+        dataPath: profileDir
     }),
-    puppeteer: { headless: true }
+    puppeteer: {
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+    }
 });
 
 client.on('qr', (qr) => {

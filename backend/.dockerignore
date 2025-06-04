@@ -1,0 +1,10 @@
+node_modules
+logs
+temp
+uploads
+IMG
+.wwebjs_auth
+.wwebjs_cache
+session
+cache
+.env 

@@ -1,0 +1,25 @@
+2025/06/04-02:49:37.290 f803 Reusing MANIFEST /Users/rafaeljana/Desktop/Projectort/InviteR/backend/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/06/04-02:49:37.291 f803 Recovering log #871
+2025/06/04-02:49:37.346 f803 Reusing old log /Users/rafaeljana/Desktop/Projectort/InviteR/backend/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000871.log 
+2025/06/04-02:49:39.105 1f70b Level-0 table #882: started
+2025/06/04-02:49:39.137 1f70b Level-0 table #882: 698172 bytes OK
+2025/06/04-02:49:39.182 1f70b Delete type=0 #871
+2025/06/04-02:49:39.183 1f70b Manual compaction at level-0 from '\x00s\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00t\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/06/04-02:49:40.930 1f70b Compacting 1@1 + 7@2 files
+2025/06/04-02:49:41.029 1f70b Generated table #883@1: 90923 keys, 2241686 bytes
+2025/06/04-02:49:41.122 1f70b Generated table #884@1: 93333 keys, 2257261 bytes
+2025/06/04-02:49:41.164 1f70b Generated table #885@1: 9132 keys, 2148682 bytes
+2025/06/04-02:49:41.218 1f70b Generated table #886@1: 15670 keys, 2170344 bytes
+2025/06/04-02:49:41.281 1f70b Generated table #887@1: 49605 keys, 2184567 bytes
+2025/06/04-02:49:41.361 1f70b Generated table #888@1: 95422 keys, 2244172 bytes
+2025/06/04-02:49:41.406 1f70b Generated table #889@1: 33739 keys, 806598 bytes
+2025/06/04-02:49:41.406 1f70b Compacted 1@1 + 7@2 files => 14053310 bytes
+2025/06/04-02:49:41.445 1f70b compacted to: files[ 0 0 7 0 0 0 0 ]
+2025/06/04-02:49:41.446 1f70b Delete type=2 #882
+2025/06/04-02:49:41.446 1f70b Delete type=2 #879
+2025/06/04-02:49:41.446 1f70b Delete type=2 #878
+2025/06/04-02:49:41.446 1f70b Delete type=2 #876
+2025/06/04-02:49:41.446 1f70b Delete type=2 #877
+2025/06/04-02:49:41.446 1f70b Delete type=2 #875
+2025/06/04-02:49:41.446 1f70b Delete type=2 #874
+2025/06/04-02:49:41.446 1f70b Delete type=2 #873

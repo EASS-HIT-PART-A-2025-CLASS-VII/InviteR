@@ -104,12 +104,42 @@ public
 .pnp.*
 
 # WhatsApp session files
-backend/.wwebjs_auth/
-backend/.wwebjs_cache/
+whatsapp-service/session/
+whatsapp-service/.wwebjs_auth/
+whatsapp-service/.wwebjs_cache/
+whatsapp-service/tmp/
+whatsapp-service/whatsapp-session/
+/tmp/whatsapp-session
 
 # Puppeteer Chromium binaries
 **/.local-chromium/
-backend/node_modules/puppeteer-core/.local-chromium/
+whatsapp-service/node_modules/puppeteer/.local-chromium/
+whatsapp-service/node_modules/puppeteer-core/.local-chromium/
 
 # Ignore all node_modules
-node_modules/ 
+/node_modules/
+/backend/node_modules/
+/frontend/node_modules/
+/whatsapp-service/node_modules/
+
+# Build/Dist folders
+/build/
+/dist/
+/frontend/build/
+/frontend/dist/
+/backend/build/
+/backend/dist/
+/whatsapp-service/build/
+/whatsapp-service/dist/
+
+# Ignore macOS system files everywhere
+**/.DS_Store
+
+# Backend logs, temp, uploads, images
+backend/logs/
+backend/temp/
+backend/uploads/
+backend/IMG/
+
+# WhatsApp-service cache
+whatsapp-service/cache/ 

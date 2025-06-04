@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: inviter-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: inviter-backend
+    restart: unless-stopped
+    ports:
+      - "5002:5002"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/inviter
+      - NODE_ENV=development
+    depends_on:
+      - mongo
+    volumes:
+      - ./backend/logs:/app/logs
+      - ./backend/temp:/app/temp
+      - ./backend/uploads:/app/uploads
+      - ./backend/IMG:/app/IMG
+
+  whatsapp-service:
+    build: ./whatsapp-service
+    container_name: inviter-whatsapp
+    restart: unless-stopped
+    ports:
+      - "5010:5010"
+    volumes:
+      - ./whatsapp-service/session:/app/session
+      - ./whatsapp-service/cache:/app/cache
+    depends_on:
+      - backend
+
+  frontend:
+    build: ./frontend
+    container_name: inviter-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  mongo_data: 

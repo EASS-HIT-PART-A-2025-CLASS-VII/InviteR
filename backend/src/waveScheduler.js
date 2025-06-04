@@ -60,7 +60,7 @@ cron.schedule('* * * * *', async () => {
                   table: g.table || ''
                 }));
                 try {
-                  const response = await axios.post('http://localhost:5010/send-wave', {
+                  const response = await axios.post('http://inviter-whatsapp:5010/send-wave', {
                     guests: guestsToSend,
                     message: wave.message
                   });

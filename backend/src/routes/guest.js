@@ -250,7 +250,7 @@ router.put('/quantity', async (req, res) => {
         if (phone.startsWith('0')) phone = '972' + phone.slice(1);
         const message = `${guest.name} מגיע - ${confirmedQuantity}`;
         try {
-          await axios.post('http://localhost:5010/send-message', {
+          await axios.post('http://inviter-whatsapp:5010/send-message', {
             recipients: [phone],
             message
           });
@@ -589,7 +589,7 @@ router.post('/waves/send', async (req, res) => {
         table: g.table || ''
       }));
       try {
-        const response = await axios.post('http://localhost:5010/send-wave', {
+        const response = await axios.post('http://inviter-whatsapp:5010/send-wave', {
           guests: guestsToSend,
           message: wave.message,
           event: {
