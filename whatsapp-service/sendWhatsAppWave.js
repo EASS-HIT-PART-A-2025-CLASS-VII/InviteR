@@ -107,10 +107,16 @@ app.listen(PORT, () => {
 
 // Function to replace dynamic variables in message
 const replaceVariables = (message, guest, event) => {
+    let formattedDate = '';
+    if (event.date) {
+        const d = new Date(event.date);
+        const pad = n => n.toString().padStart(2, '0');
+        formattedDate = `${pad(d.getDate())}|${pad(d.getMonth() + 1)}|${d.getFullYear()}`;
+    }
     return message
         .replace(/\{Name\}/g, guest.name || '')
         .replace(/\{Table\}/g, guest.table || '')
-        .replace(/\{EventDate\}/g, event.date || '')
+        .replace(/\{EventDate\}/g, formattedDate)
         .replace(/\{EventLocation\}/g, event.location || '')
         .replace(/\{GroomName\}/g, event.groomName || '')
         .replace(/\{BrideName\}/g, event.brideName || '')
