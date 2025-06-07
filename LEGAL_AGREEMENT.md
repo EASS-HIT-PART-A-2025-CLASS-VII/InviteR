@@ -89,12 +89,36 @@
    - Service is provided "as is"
    - No guarantee of uninterrupted service
    - No guarantee of data accuracy
+   - No guarantee of message delivery
+   - No guarantee of WhatsApp service availability
 
 8.2 **Damage Limitations:**
    - Company is not liable for indirect damages
    - Company is not liable for lost profits
    - Company is not liable for data loss
+   - Company is not liable for business interruption
+   - Company is not liable for any WhatsApp-related issues
+   - Company is not liable for third-party service failures
    - Maximum liability is limited to subscription fees paid
+
+8.3 **Complete Liability Waiver:**
+   - Client waives all rights to sue Company for any reason related to Service use
+   - Client waives rights to class action lawsuits
+   - Client waives rights to join class action lawsuits
+   - Client acknowledges Service limitations and accepts all risks
+   - Client agrees to hold Company harmless for all claims
+
+8.4 **Specific Waivers:**
+   - No liability for message delivery failures
+   - No liability for WhatsApp service disruptions
+   - No liability for data synchronization issues
+   - No liability for third-party integration problems
+   - No liability for system downtime
+   - No liability for data corruption
+   - No liability for security breaches
+   - No liability for unauthorized access
+   - No liability for service modifications
+   - No liability for feature changes or removals
 
 ## 9. Indemnification
 
@@ -195,6 +219,59 @@
    - Indemnification
    - Confidentiality
 
+## 21. Complete Release of Claims
+
+21.1 **General Release:**
+   - Client releases Company from all claims
+   - Client releases Company from all damages
+   - Client releases Company from all liabilities
+   - Client releases Company from all costs
+   - Client releases Company from all expenses
+
+21.2 **Specific Release:**
+   - Release from software-related claims
+   - Release from service-related claims
+   - Release from data-related claims
+   - Release from communication-related claims
+   - Release from integration-related claims
+
+21.3 **Future Claims:**
+   - Client waives unknown future claims
+   - Client waives undiscovered claims
+   - Client waives potential future claims
+   - Client acknowledges this is a complete release
+
+## 22. No Warranties
+
+22.1 **Express Disclaimer:**
+   - No warranties of any kind
+   - No implied warranties
+   - No merchantability warranties
+   - No fitness for purpose warranties
+   - No non-infringement warranties
+
+22.2 **Service Disclaimer:**
+   - No warranty of uninterrupted service
+   - No warranty of error-free operation
+   - No warranty of data accuracy
+   - No warranty of security
+   - No warranty of compatibility
+
+## 23. Assumption of Risk
+
+23.1 **General Assumption:**
+   - Client assumes all risks
+   - Client accepts all limitations
+   - Client acknowledges potential issues
+   - Client understands service constraints
+
+23.2 **Specific Risks:**
+   - WhatsApp service limitations
+   - Message delivery delays
+   - Data synchronization issues
+   - System performance variations
+   - Third-party service dependencies
+
 ## Contact Information
 
 For legal inquiries:
@@ -212,4 +289,6 @@ For service inquiries:
 
 *Last Updated: [Date]*
 
-*This document is a legal agreement. Please read it carefully before using the Service. By using the Service, you agree to be bound by these Terms.* 
+*This document is a legal agreement. Please read it carefully before using the Service. By using the Service, you agree to be bound by these Terms. You acknowledge that you have read, understood, and agree to all terms, including the complete release of claims and assumption of risk.*
+
+*IMPORTANT: By using the Service, you are giving up important legal rights. Please read this agreement carefully.* 
