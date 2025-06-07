@@ -184,6 +184,58 @@ InviteR/
 
 ---
 
+## Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph Client
+        Browser[Web Browser]
+        Mobile[Mobile Devices]
+    end
+
+    subgraph Frontend Service
+        React[React App]
+        Redux[Redux Store]
+        Router[React Router]
+        UI[Material-UI]
+    end
+
+    subgraph Backend Service
+        API[Express API]
+        Auth[JWT Auth]
+        Controllers[Controllers]
+        Services[Business Logic]
+    end
+
+    subgraph WhatsApp Service
+        WA[WhatsApp Web.js]
+        Queue[Message Queue]
+        Puppeteer[Puppeteer]
+    end
+
+    subgraph Database
+        MongoDB[(MongoDB)]
+    end
+
+    Browser --> React
+    Mobile --> React
+    React --> Redux
+    Redux --> Router
+    Router --> UI
+    
+    React --> API
+    API --> Auth
+    Auth --> Controllers
+    Controllers --> Services
+    Services --> MongoDB
+    
+    API --> WA
+    WA --> Queue
+    Queue --> Puppeteer
+    WA --> MongoDB
+```
+
+
 ## Contribution
 Pull requests are welcome! Please open an issue first to discuss major changes.
 - Follow code style and naming conventions.
