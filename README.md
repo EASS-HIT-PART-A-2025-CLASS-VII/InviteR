@@ -245,5 +245,5 @@ Pull requests are welcome! Please open an issue first to discuss major changes.
 ---
 
 ## License
-All rights reserved © 2025 InviteR
+All rights reserved for Rafael Jana © 2025 InviteR
  
